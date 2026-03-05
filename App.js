@@ -1,11 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import {
     createTableIfNotExists,
     getQuestions,
     insertQuestionsIfNotExists,
 } from "./src/db/sqliteDatabaseService";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
     const [questions, setQuestions] = useState([]);
@@ -25,18 +26,36 @@ export default function App() {
     }, []);
 
     return (
-        <View style={styles.container}>
-            <Text>Open up App.js to start working on your app!</Text>
-            <StatusBar style="auto" />
-        </View>
+        <SafeAreaProvider>
+            <SafeAreaView>
+                <StatusBar />
+                <View style={styles.container}>
+                    <TouchableOpacity style={styles.button}>
+                        <Text style={styles.buttonText}>Iniciar Jogo</Text>
+                    </TouchableOpacity>
+                </View>
+            </SafeAreaView>
+        </SafeAreaProvider>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        display: "flex",
+        height: "100%",
         backgroundColor: "#fff",
         alignItems: "center",
         justifyContent: "center",
+    },
+    button: {
+        backgroundColor: "#007AFF",
+        paddingHorizontal: 32,
+        paddingVertical: 12,
+        borderRadius: 8,
+    },
+    buttonText: {
+        color: "#fff",
+        fontSize: 16,
+        fontWeight: "bold",
     },
 });
